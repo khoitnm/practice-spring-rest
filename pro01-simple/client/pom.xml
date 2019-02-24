@@ -6,6 +6,7 @@
 
     <groupId>org.tnmk.skeleton.practice-spring-rest.pro01-simple</groupId>
     <artifactId>client</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
