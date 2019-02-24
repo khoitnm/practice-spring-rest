@@ -1,16 +1,16 @@
-package org.tnmk.practicespringrest.server.model;
+package org.tnmk.practicespringrest.client.item;
 
-public class Item {
-    private String id;
+public class ClientItem {
+    private String item;
     private String name;
     private String status;
 
-    public String getId() {
-        return id;
+    public String getItem() {
+        return item;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getName() {

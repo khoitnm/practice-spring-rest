@@ -2,31 +2,31 @@ package org.tnmk.practicespringrest.server.item;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.tnmk.practicespringrest.server.model.Item;
+import org.tnmk.practicespringrest.server.model.ServerItem;
 
 import java.time.Instant;
 
 @Service
 public class ItemStory {
-    public Item createItem(Item item) {
-        item.setStatus("created_" + Instant.now());
-        return item;
+    public ServerItem createItem(ServerItem serverItem) {
+        serverItem.setStatus("created_" + Instant.now());
+        return serverItem;
     }
 
-    public Item updateItem(Item item) {
-        item.setStatus("update_" + Instant.now());
-        return item;
+    public ServerItem updateItem(ServerItem serverItem) {
+        serverItem.setStatus("update_" + Instant.now());
+        return serverItem;
     }
 
-    public Item findItemById(String itemId) {
+    public ServerItem findItemById(String itemId) {
         if (StringUtils.isEmpty(itemId)){
             return null;
         }else {
-            Item item = new Item();
-            item.setId(itemId);
-            item.setName("Some stored item "+itemId);
-            item.setStatus("stored");
-            return item;
+            ServerItem serverItem = new ServerItem();
+            serverItem.setId(itemId);
+            serverItem.setName("Some stored item "+itemId);
+            serverItem.setStatus("stored");
+            return serverItem;
         }
     }
 }

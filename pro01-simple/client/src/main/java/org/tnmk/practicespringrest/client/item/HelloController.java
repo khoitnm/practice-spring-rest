@@ -1,4 +1,4 @@
-package org.tnmk.practicespringrest.client.samplestory.rest;
+package org.tnmk.practicespringrest.client.item;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

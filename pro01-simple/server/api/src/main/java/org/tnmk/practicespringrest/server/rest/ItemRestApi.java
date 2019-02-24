@@ -2,7 +2,7 @@ package org.tnmk.practicespringrest.server.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.tnmk.practicespringrest.server.model.Item;
+import org.tnmk.practicespringrest.server.model.ServerItem;
 
 /**
  * This interface will be rused by @FeignClient on client apps.
@@ -11,11 +11,11 @@ import org.tnmk.practicespringrest.server.model.Item;
 public interface ItemRestApi {
     @PostMapping(path = "/items", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
     @ResponseStatus(HttpStatus.CREATED)
-    Item createItem(@RequestBody Item item);
+    ServerItem createServerItem(@RequestBody ServerItem serverItem);
 
     @PutMapping(path = "/items", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
-    Item updateItem(@RequestBody Item item);
+    ServerItem updateServerItem(@RequestBody ServerItem serverItem);
 
     @GetMapping(path = "/items/{itemId}", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
-    Item findItemById(@PathVariable String itemId);
+    ServerItem findServerItemById(@PathVariable String itemId);
 }

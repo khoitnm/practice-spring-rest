@@ -2,7 +2,7 @@ package org.tnmk.practicespringrest.server.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import org.tnmk.practicespringrest.server.model.Item;
+import org.tnmk.practicespringrest.server.model.ServerItem;
 import org.tnmk.practicespringrest.server.rest.ItemRestApi;
 
 @RestController
@@ -14,15 +14,15 @@ public class ItemRestService implements ItemRestApi {
         this.itemStory = itemStory;
     }
 
-    public Item createItem(Item item) {
-        return itemStory.createItem(item);
+    public ServerItem createServerItem(ServerItem serverItem) {
+        return itemStory.createItem(serverItem);
     }
 
-    public Item updateItem(Item item) {
-        return itemStory.updateItem(item);
+    public ServerItem updateServerItem(ServerItem serverItem) {
+        return itemStory.updateItem(serverItem);
     }
 
-    public Item findItemById(String itemId) {
+    public ServerItem findServerItemById(String itemId) {
         return itemStory.findItemById(itemId);
     }
 }
