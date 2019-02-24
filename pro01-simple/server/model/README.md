@@ -1,0 +1,2 @@
+In general, this package contains only rest models which is used to communicate with rest api.
+However, just to make it quick, I'll reuse some of those models for both service layer and repository layer (DB entities).
