@@ -1,4 +1,0 @@
-itemgrpc:
-  connection:
-    host: localhost
-    port: 6565
