@@ -12,8 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>8</java.version>
-
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version><!-- Spring Boot 2.1.x -->
     </properties>
 
     <dependencies>
