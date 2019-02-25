@@ -9,7 +9,7 @@ import org.tnmk.practicespringrest.server.rest.dto.ServerItemDto;
  */
 @RequestMapping(ApiConstants.API_BASE)
 public interface ItemRestApi {
-    @PostMapping(path = "/items", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
+    @PostMapping(path = "/items")
 
     //This is just an example, but we don't really rely on the status.CREATED anyway.
     // To make it simple for client app, just use HttpStatus.OK for all success actions.
@@ -18,13 +18,13 @@ public interface ItemRestApi {
     @ResponseStatus(HttpStatus.CREATED)
     ServerItemDto createServerItem(@RequestBody ServerItemDto serverItem);
 
-    @PutMapping(path = "/items", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
+    @PutMapping(path = "/items")
     ServerItemDto updateServerItem(@RequestBody ServerItemDto serverItem);
 
-    @GetMapping(path = "/items/{itemId}", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
+    @GetMapping(path = "/items/{itemId}")
     ServerItemDto findServerItemById(@PathVariable Integer itemId);
 
-    @DeleteMapping(path = "/items/{itemId}", consumes = ApiConstants.VERSION, produces = ApiConstants.VERSION)
+    @DeleteMapping(path = "/items/{itemId}")
     void deleteServerItemById(@PathVariable Integer itemId);
 
 }
