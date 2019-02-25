@@ -1,10 +1,6 @@
-package org.tnmk.practicespringrest.server.model;
+package org.tnmk.practicespringrest.server.rest.dto;
 
-/**
- * On production code, just name it `Item` is enough.
- * In this practice project, we work with both client & server app in the same repository, so I use the name {@link ServerItem} to distinguish with {@link ClientItem} just to make it a little bit easier to understand.
- */
-public class ServerItem {
+public class ServerItemDto {
     private String id;
     private String name;
     private String status;
