@@ -25,7 +25,7 @@ public class ClientItemRestService {
         return clientItemService.addRandomItem();
     }
 
-    @GetMapping("/items.delete/${itemId}")
+    @GetMapping("/items.delete/{itemId}")
     public void deleteRandomItem(@PathVariable Integer itemId) {
         clientItemService.deleteItem(itemId);
     }
