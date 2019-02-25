@@ -26,3 +26,5 @@ If you want to build without testing, run the command line:
 mvn clean install -DskipTests 
 ```
 
+View the API Documents:
+Open this URL on the browser: http://localhost:8081/swagger-ui.html
