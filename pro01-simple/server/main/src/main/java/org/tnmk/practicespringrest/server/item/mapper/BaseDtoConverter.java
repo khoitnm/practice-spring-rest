@@ -22,8 +22,8 @@ public abstract class BaseDtoConverter<MODEL, DTO> {
     public BaseDtoConverter() {
         ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
         Type[] types = parameterizedType.getActualTypeArguments();
-        dtoClass = (Class<DTO>) types[0];
-        modelClass = (Class<MODEL>) types[1];
+        modelClass = (Class<MODEL>) types[0];
+        dtoClass = (Class<DTO>) types[1];
     }
 
     public void toModel(DTO dto, MODEL model) {

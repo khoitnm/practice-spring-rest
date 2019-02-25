@@ -1,4 +1,4 @@
-package org.tnmk.practicespringrest.client.item;
+package org.tnmk.practicespringrest.client;
 
 import org.springframework.context.annotation.Configuration;
 

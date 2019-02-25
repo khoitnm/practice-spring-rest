@@ -21,10 +21,16 @@ public interface ItemRestApi {
     @PutMapping(path = "/items")
     ServerItemDto updateServerItem(@RequestBody ServerItemDto serverItem);
 
+    /**
+     * Note: Must explicitly declare variable name "itemId" inside @PathVariable("itemId")
+     * Otherwise, you will get error "PathVariable annotation was empty on param 0."
+     * @param itemId
+     * @return
+     */
     @GetMapping(path = "/items/{itemId}")
-    ServerItemDto findServerItemById(@PathVariable Integer itemId);
+    ServerItemDto findServerItemById(@PathVariable("itemId") Integer itemId);
 
     @DeleteMapping(path = "/items/{itemId}")
-    void deleteServerItemById(@PathVariable Integer itemId);
+    void deleteServerItemById(@PathVariable("itemId") Integer itemId);
 
 }
