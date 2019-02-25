@@ -3,7 +3,7 @@ package org.tnmk.practicespringrest.client.item;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tnmk.practicespringrest.server.model.ServerItem;
+import org.tnmk.practicespringrest.server.rest.dto.ServerItemDto;
 
 @Service
 public class ClientItemService {
@@ -16,12 +16,16 @@ public class ClientItemService {
     }
 
     public ClientItem addRandomItem(){
-        ServerItem serverItem = new ServerItem();
+        ServerItemDto serverItem = new ServerItemDto();
         serverItem.setName("Item_"+System.nanoTime());
-        ServerItem createdServerItem = serverItemRestClient.createServerItem(serverItem);
+        ServerItemDto createdServerItem = serverItemRestClient.createServerItem(serverItem);
 
         ClientItem clientItem = new ClientItem();
         BeanUtils.copyProperties(createdServerItem, clientItem);
         return clientItem;
+    }
+
+    public void deleteItem(Integer itemId) {
+        serverItemRestClient.deleteServerItemById(itemId);
     }
 }

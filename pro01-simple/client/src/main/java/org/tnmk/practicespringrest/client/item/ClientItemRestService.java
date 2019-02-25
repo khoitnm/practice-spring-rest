@@ -2,6 +2,7 @@ package org.tnmk.practicespringrest.client.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,9 +25,9 @@ public class ClientItemRestService {
         return clientItemService.addRandomItem();
     }
 
-    @GetMapping("/items.delete")
-    public ClientItem deleteRandomItem() {
-        return clientItemService.addRandomItem();
+    @GetMapping("/items.delete/${itemId}")
+    public void deleteRandomItem(@PathVariable Integer itemId) {
+        clientItemService.deleteItem(itemId);
     }
 
 }
