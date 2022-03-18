@@ -10,6 +10,7 @@
 
     <modules>
         <module>pro01-simple</module>
+        <module>pro02-resource-path-registry</module>
     </modules>
 
     <properties>
