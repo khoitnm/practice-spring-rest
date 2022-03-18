@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     // PathPattern:
     //  - Change Path Pattern in Spring: https://spring.io/blog/2020/06/30/url-matching-with-pathpattern-in-spring-mvc
     //  - Test case: https://github.com/spring-projects/spring-framework/blob/main/spring-web/src/test/java/org/springframework/web/util/pattern/PathPatternTests.java
-    registry.addResourceHandler("/app01/asset-manifest.json")
+    registry.addResourceHandler("/app01/asset-manifest*") // for asset-manifest.json
         .addResourceLocations("classpath:/META-INF/resources/app-01/")
         .setCachePeriod(0);
 
