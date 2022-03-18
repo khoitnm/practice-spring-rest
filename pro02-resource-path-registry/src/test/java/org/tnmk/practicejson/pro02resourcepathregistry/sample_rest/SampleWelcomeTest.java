@@ -18,7 +18,7 @@ public class SampleWelcomeTest extends BaseIntegrationTest {
   private ObjectMapper objectMapper;
 
   @Test
-  void test_Resources_for_API() throws Exception {
+  void test_api() throws Exception {
     String responseStr = mvc
         .perform(get("/api/welcome")).andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString();

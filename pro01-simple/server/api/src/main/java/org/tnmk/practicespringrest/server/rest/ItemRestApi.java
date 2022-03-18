@@ -12,8 +12,8 @@ public interface ItemRestApi {
     @PostMapping(path = "/items")
 
     //This is just an example, but we don't really rely on the status.CREATED anyway.
-    // To make it simple for client app01, just use HttpStatus.OK for all success actions.
-    // I don't see using HttpStatus.CREATED brings any additional benefits for client app01.
+    // To make it simple for client app-01, just use HttpStatus.OK for all success actions.
+    // I don't see using HttpStatus.CREATED brings any additional benefits for client app-01.
     // And remember, don't try to map APIs actions to CRUD, so don't try to map HttpStatus to CRUD's status response.
     @ResponseStatus(HttpStatus.CREATED)
     ServerItemDto createServerItem(@RequestBody ServerItemDto serverItem);

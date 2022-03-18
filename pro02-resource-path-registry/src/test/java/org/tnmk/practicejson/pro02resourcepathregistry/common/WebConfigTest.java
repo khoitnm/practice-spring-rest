@@ -10,6 +10,7 @@ import org.tnmk.practicejson.pro02resourcepathregistry.testinfra.BaseIntegration
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class WebConfigTest extends BaseIntegrationTest {
@@ -27,6 +28,7 @@ public class WebConfigTest extends BaseIntegrationTest {
 
         // Then
         .andExpect(status().isOk())
+        .andExpect(header().string("Cache-Control", "no-store"))
         .andReturn().getResponse().getContentAsString();
 
     String resourcePath = getResourcePathFromAssetManifestContent(assetManifestContent);
