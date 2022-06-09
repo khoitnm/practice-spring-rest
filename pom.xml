@@ -11,6 +11,7 @@
     <modules>
         <module>pro01-simple</module>
         <module>pro02-resource-path-registry</module>
+        <module>pro03-upload-file</module>
     </modules>
 
     <properties>

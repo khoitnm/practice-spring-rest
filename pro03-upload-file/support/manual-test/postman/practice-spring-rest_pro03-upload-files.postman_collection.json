@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "260afca8-36ea-4699-8d9e-f5a81f0bb444",
+		"name": "practice-spring-rest_pro03-upload-files",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pro03_01_upload_items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/dev/workspace/personal/practice-spring-rest/pro03-upload-file/support/manual-test/Items.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/upload-items?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"upload-items"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
