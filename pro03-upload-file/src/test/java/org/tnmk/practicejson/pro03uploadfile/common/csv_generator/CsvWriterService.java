@@ -25,7 +25,13 @@ public class CsvWriterService {
   }
 
   public void writeLinesToCsvFile(List<String[]> lines, String fileAbsPath) throws IOException {
-    try (CSVWriter writer = new CSVWriter(new FileWriter(fileAbsPath))) {
+    try (CSVWriter writer = new CSVWriter(
+        new FileWriter(fileAbsPath),
+        CSVWriter.DEFAULT_SEPARATOR,
+        CSVWriter.NO_QUOTE_CHARACTER,
+        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.DEFAULT_LINE_END)
+    ) {
       writer.writeAll(lines);
     }
   }

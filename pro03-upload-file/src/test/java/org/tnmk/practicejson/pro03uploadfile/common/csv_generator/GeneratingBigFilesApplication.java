@@ -1,7 +1,6 @@
 package org.tnmk.practicejson.pro03uploadfile.common.csv_generator;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.tnmk.practicejson.pro03uploadfile.common.Item;
 
 import java.io.IOException;
@@ -10,13 +9,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GeneratingBigFilesApplication {
-  @Autowired
-  CsvWriterService csvWriterService;
+  private final CsvWriterService csvWriterService = new CsvWriterService();
 
   @Test
   public void execute() throws IOException {
-    List<Item> items = generateItems(90000);
-    csvWriterService.writeItemsToCsvFile(items, "C:\\Users\\trank\\Desktop\\testdata.csv");
+    int itemsCount = 90000;
+    List<Item> items = generateItems(itemsCount);
+    csvWriterService.writeItemsToCsvFile(items, "C:\\dev\\workspace\\personal\\practice-spring-rest\\pro03-upload-file\\support\\manual-test\\test-data\\Items_" + itemsCount + ".csv");
   }
 
   private List<Item> generateItems(int itemsCount) {
