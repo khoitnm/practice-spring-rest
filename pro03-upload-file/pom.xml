@@ -51,7 +51,17 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- For generating test data: csv file -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
 
     <dependencyManagement>
         <dependencies>
