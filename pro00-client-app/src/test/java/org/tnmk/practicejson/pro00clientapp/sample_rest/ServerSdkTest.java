@@ -16,8 +16,8 @@ public class ServerSdkTest extends BaseIntegrationTest {
 
 
   @Test
-  void canSendRequestTo_ApiServerSuccessfully() throws Exception {
-    String nonExistingServer_BaseUrl = "http://localhost:" + System.nanoTime();
+  void whenRequestToANonExistingHost_thenConnectionTimeout() throws Exception {
+    String nonExistingServer_BaseUrl = "http://1.100.100.1:81"; // this is a non-existing host.
     ServerSdk serverSdk = new ServerSdk(restTemplateBuilder, nonExistingServer_BaseUrl);
 
     StopWatch stopWatch = new StopWatch();
