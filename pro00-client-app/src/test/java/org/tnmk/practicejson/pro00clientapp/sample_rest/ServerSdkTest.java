@@ -47,10 +47,10 @@ public class ServerSdkTest extends BaseIntegrationTest {
     StopWatch stopWatch = new StopWatch();
     stopWatch.start();
     try {
-      // Server side will take 10 seconds LONGER the actual connection timeout.
+      // Server side will take 10 seconds LONGER the actual read timeout.
       // It means the request will definitely be timeout.
       serverSdk.connectionTimeout(ServerSdk.SOCKET_READ_TIMEOUT_MILLIS + 5000);
-      Assertions.fail("A ReadTimeout/ConnectionTimeout should happen here.");
+      Assertions.fail("A ReadTimeout exception should happen here.");
     } catch (ResourceAccessException ex) {
       log.info("Expect getting error `ResourceAccessException`: " + ex.getMessage());
     } finally {
