@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>pro00-client-app</module>
         <module>pro01-simple</module>
         <module>pro01-client-server</module>
         <module>pro02-resource-path-registry</module>
