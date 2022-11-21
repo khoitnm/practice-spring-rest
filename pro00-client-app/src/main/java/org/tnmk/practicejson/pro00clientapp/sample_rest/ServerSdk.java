@@ -1,12 +1,14 @@
 
 package org.tnmk.practicejson.pro00clientapp.sample_rest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 
+@Slf4j
 /**
  * This class is considered as an SDK to call APIs on another server.
  */
@@ -20,7 +22,7 @@ public class ServerSdk {
     this.serverBaseUrl = serverBaseUrl;
     this.restTemplate = restTemplateBuilder
         .setConnectTimeout(Duration.ofMillis(CONNECTION_TIMEOUT_MILLIS))
-        .setReadTimeout(Duration.ofSeconds(SOCKET_READ_TIMEOUT_MILLIS))
+        .setReadTimeout(Duration.ofMillis(SOCKET_READ_TIMEOUT_MILLIS))
         .build();
   }
 
@@ -32,6 +34,8 @@ public class ServerSdk {
   }
 
   public String connectionTimeout(long serverRuntimeInMills) {
+    log.info("Start sending request");
+
     ResponseEntity<String> response = restTemplate.getForEntity(
         serverBaseUrl + "/api/longRun?runtimeInMills=" + serverRuntimeInMills,
         String.class);

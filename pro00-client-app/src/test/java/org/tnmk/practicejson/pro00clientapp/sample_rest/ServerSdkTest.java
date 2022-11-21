@@ -49,7 +49,8 @@ public class ServerSdkTest extends BaseIntegrationTest {
     try {
       // Server side will take 10 seconds LONGER the actual connection timeout.
       // It means the request will definitely be timeout.
-      serverSdk.connectionTimeout(ServerSdk.CONNECTION_TIMEOUT_MILLIS + 10000);
+      serverSdk.connectionTimeout(ServerSdk.SOCKET_READ_TIMEOUT_MILLIS + 5000);
+      Assertions.fail("A ReadTimeout/ConnectionTimeout should happen here.");
     } catch (ResourceAccessException ex) {
       log.info("Expect getting error `ResourceAccessException`: " + ex.getMessage());
     } finally {
@@ -57,7 +58,7 @@ public class ServerSdkTest extends BaseIntegrationTest {
       log.info("Runtime (mills): " + stopWatch.getTotalTimeMillis());
 
       Assertions.assertEquals(
-          ServerSdk.CONNECTION_TIMEOUT_MILLIS,
+          ServerSdk.SOCKET_READ_TIMEOUT_MILLIS,
           stopWatch.getTotalTimeMillis(),
           100);
     }
