@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.tnmk.skeleton.practice-spring-rest.pro01-simple</groupId>
+    <groupId>org.tnmk.skeleton.practice-spring-rest.pro01-client-server</groupId>
     <artifactId>client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -23,7 +23,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.tnmk.skeleton.practice-spring-rest.pro01-simple.server</groupId>
+            <groupId>org.tnmk.skeleton.practice-spring-rest.pro01-client-server.server</groupId>
             <artifactId>api</artifactId>
             <version>0.0.1</version>
         </dependency>
