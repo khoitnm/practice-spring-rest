@@ -7,6 +7,15 @@ import org.springframework.util.StopWatch;
 
 @Slf4j
 public class ServerSdkWithHttpClientTest {
+  @Test
+  void successfulWelcomeRequest() throws Exception {
+    ServerSdkWithHttpClient serverSdkWithHttpClient =
+        new ServerSdkWithHttpClient(ServerSdkWithHttpClient.DEFAULT_SERVER_BASE_URL);
+
+    String responseContent = serverSdkWithHttpClient.welcome();
+
+    Assertions.assertNotNull(responseContent);
+  }
 
   @Test
   void whenRequestToANonExistingHost_thenConnectionTimeout() throws Exception {

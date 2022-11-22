@@ -22,10 +22,34 @@ import java.util.concurrent.TimeUnit;
 public class ServerSdkWithHttpClient {
   public static final String DEFAULT_SERVER_BASE_URL = "http://localhost:8080";
 
+  /**
+   * Reference: https://www.imperva.com/learn/performance/http-keep-alive/
+   */
   public static final int CONNECTION_KEEP_ALIVE_MILLIS = 9 * 1000;
+  /**
+   * Time To Live: It's related a living time of a connection inside a pool before it's closed.
+   * A note about the ConnectionTimeToLive implementation in Apache HttpClient 4.5.4: I think you must use the PoolingHttpClientConnectionManager for the option to work (it eventually all comes down to a call to this isExpired method). If you do not use this connection manager, test the option to make sure it really works.
+   * https://stackoverflow.com/questions/31566851/apache-httpclient-setconnecttimeout-vs-setconnectiontimetolive-vs-setsock
+   */
   public static final int CONNECTION_TIME_TO_LIVE_MILLIS = 11 * 1000;
+  /**
+   * A connection timeout is the maximum amount of time that the program is willing to wait to set up a connection to
+   * another process.
+   * You aren't getting or posting any application data at this point, just establishing the connection, itself.
+   * Reference: https://stackoverflow.com/questions/7360520/connectiontimeout-versus-sockettimeout
+   */
   public static final int CONNECTION_TIMEOUT_MILLIS = 5 * 1000;
   public static final int CONNECTION_REQUEST_TIMEOUT_MILLIS = 7 * 1000;
+
+  /**
+   * SocketTimeout:
+   * A socket timeout is the timeout when waiting for individual packets.
+   * It's a common misconception that a socket timeout is the timeout to receive the full response.
+   * So if you have a socket timeout of 1 second, and a response comprised of 3 IP packets,
+   * where each response packet takes 0.9 seconds to arrive, for a total response time of 2.7 seconds,
+   * then there will be no timeout.
+   * Reference: https://stackoverflow.com/questions/7360520/connectiontimeout-versus-sockettimeout
+   */
   public static final int SOCKET_READ_TIMEOUT_MILLIS = 3 * 1000;
   private final String serverBaseUrl;
   private final HttpClient httpClient;
@@ -35,7 +59,7 @@ public class ServerSdkWithHttpClient {
     this.httpClient = HttpClientBuilder.create()
         .setDefaultRequestConfig(buildRequestConfig())
         .setDefaultSocketConfig(buildSocketConfig())
-        .setKeepAliveStrategy(getConnectionKeepAliveStrategy())
+        .setKeepAliveStrategy(createConnectionKeepAliveStrategy(CONNECTION_KEEP_ALIVE_MILLIS))
         .setConnectionTimeToLive(CONNECTION_TIME_TO_LIVE_MILLIS, TimeUnit.MILLISECONDS)
         .setMaxConnTotal(-1)
         .build();
@@ -80,8 +104,8 @@ public class ServerSdkWithHttpClient {
         .build();
   }
 
-  private ConnectionKeepAliveStrategy getConnectionKeepAliveStrategy() {
-    return (httpResponse, httpContext) -> CONNECTION_KEEP_ALIVE_MILLIS;
+  private ConnectionKeepAliveStrategy createConnectionKeepAliveStrategy(long keepAliveMillis) {
+    return (httpResponse, httpContext) -> keepAliveMillis;
   }
 
 }
