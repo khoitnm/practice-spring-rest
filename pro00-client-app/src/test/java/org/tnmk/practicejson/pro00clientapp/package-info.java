@@ -1,1 +1,0 @@
-package org.tnmk.practicejson.pro00clientapp;

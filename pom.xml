@@ -9,7 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>pro00-client-app</module>
+        <module>pro00-client-with-rest-template</module>
+        <module>pro00-client-with-http-client</module>
         <module>pro01-simple</module>
         <module>pro01-client-server</module>
         <module>pro02-resource-path-registry</module>
