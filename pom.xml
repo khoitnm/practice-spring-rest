@@ -15,6 +15,7 @@
         <module>pro01-client-server</module>
         <module>pro02-resource-path-registry</module>
         <module>pro03-upload-file</module>
+        <module>pro04-simple-filter</module>
     </modules>
 
     <properties>

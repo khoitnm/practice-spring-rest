@@ -1,4 +1,4 @@
-package org.tnmk.practicejson.pro01simple.common;
+package org.tnmk.practicejson.pro04simplefilter.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
