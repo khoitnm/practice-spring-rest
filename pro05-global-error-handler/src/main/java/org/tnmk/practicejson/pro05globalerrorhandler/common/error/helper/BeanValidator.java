@@ -1,13 +1,16 @@
 package org.tnmk.practicejson.pro05globalerrorhandler.common.error.helper;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+//import javax.validation.ConstraintViolation;
+//import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import javax.validation.Validator;
+//import javax.validation.Validator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 

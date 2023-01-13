@@ -18,7 +18,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.exception.BadRequestException;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.helper.ErrorHelper;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.model.ErrorResponse;
-import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.ConstraintViolationTranslator;
+import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.ConstraintViolationJakartaTranslator;
+import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.ConstraintViolationJavaxTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.GeneralTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.MethodArgumentMismatchTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.MethodArgumentNotValidTranslator;
@@ -91,8 +92,20 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(ConstraintViolationException ex) {
-        ErrorResponse errorResponse = ConstraintViolationTranslator.toErrorResponse(ex);
+    public ErrorResponse javaxConstraintViolationExceptionException(ConstraintViolationException ex) {
+        ErrorResponse errorResponse = ConstraintViolationJavaxTranslator.toErrorResponse(ex);
+        logError(errorResponse, ex);
+        return errorResponse;
+    }
+
+    /**
+     * @param ex The exception that was thrown.
+     * @return The error response.
+     */
+    @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse jakartaConstraintViolationExceptionException(jakarta.validation.ConstraintViolationException ex) {
+        ErrorResponse errorResponse = ConstraintViolationJakartaTranslator.toErrorResponse(ex);
         logError(errorResponse, ex);
         return errorResponse;
     }

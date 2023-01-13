@@ -1,5 +1,7 @@
 package org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -11,14 +13,12 @@ import org.tnmk.practicejson.pro05globalerrorhandler.common.error.model.ErrorRes
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 
 /**
  * Note: in the result of this translator, some fields are not set (deprecated).
  * View deprecated fields in {@link MethodArgumentNotValidTranslator}
  */
-public interface ConstraintViolationTranslator {
+public interface ConstraintViolationJakartaTranslator {
     /**
      * Transform the {@link ConstraintViolationException} to {@link ErrorResponse}
      * This error is usually caused by validation rule on {@link RestController}.
