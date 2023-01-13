@@ -34,6 +34,7 @@ public interface ConstraintViolationJakartaTranslator {
             .collect(Collectors.toList());
         ErrorResponse errorResponse = ErrorHelper.createErrorsResponse(errorFields);
         errorResponse.setErrorCode(ex.getClass().getSimpleName());
+        errorResponse.setErrorMessage(ex.getMessage());
         return errorResponse;
     }
 

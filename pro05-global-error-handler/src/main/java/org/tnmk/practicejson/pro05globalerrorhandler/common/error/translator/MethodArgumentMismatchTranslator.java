@@ -24,6 +24,7 @@ public interface MethodArgumentMismatchTranslator {
     static ErrorResponse toErrorResponse(MethodArgumentTypeMismatchException ex) {
         ErrorResponse errorResponse = new ErrorResponse();
         String classAndMethod = prettyFormatMethodWithArguments(ex.getParameter().getMethod());
+        errorResponse.setErrorCode(ex.getClass().getSimpleName());
         errorResponse.setErrorMessage("Error at method: " + classAndMethod);
         errorResponse.addErrorField(toErrorField(ex));
         return errorResponse;
