@@ -21,6 +21,7 @@ import org.tnmk.practicejson.pro05globalerrorhandler.common.error.model.ErrorRes
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.ConstraintViolationJakartaTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.ConstraintViolationJavaxTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.GeneralTranslator;
+import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.HttpRequestMethodNotSupportedTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.MethodArgumentMismatchTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.MethodArgumentNotValidTranslator;
 import org.tnmk.practicejson.pro05globalerrorhandler.common.error.translator.NullPointerTranslator;
@@ -53,6 +54,16 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
+    @ExceptionHandler( {
+        HttpRequestMethodNotSupportedException.class,
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        ErrorResponse errors = HttpRequestMethodNotSupportedTranslator.toErrorResponse(ex);
+        logError(errors, ex);
+        return errors;
+    }
+
     /**
      * Handles bad requests exceptions.
      * <p/>
@@ -73,7 +84,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( {
         BadRequestException.class,
-        HttpRequestMethodNotSupportedException.class,
         ServletRequestBindingException.class,
         TypeMismatchException.class,
         HttpMessageNotReadableException.class,
