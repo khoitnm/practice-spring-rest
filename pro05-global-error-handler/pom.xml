@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.tnmk.skeleton.practice-json.pro04-simple-filter</groupId>
-    <artifactId>pro04-simple-filter</artifactId>
+    <groupId>org.tnmk.skeleton.practice-json.pro05-global-error-handler</groupId>
+    <artifactId>pro05-global-error-handler</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -22,7 +22,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

@@ -1,0 +1,6 @@
+# This config will override the main application.yml in the main folder.
+server.port: 8082
+
+spring:
+  jpa:
+    show-sql: false

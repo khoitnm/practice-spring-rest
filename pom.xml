@@ -16,6 +16,7 @@
         <module>pro02-resource-path-registry</module>
         <module>pro03-upload-file</module>
         <module>pro04-simple-filter</module>
+        <module>pro05-global-error-handler</module>
     </modules>
 
     <properties>
