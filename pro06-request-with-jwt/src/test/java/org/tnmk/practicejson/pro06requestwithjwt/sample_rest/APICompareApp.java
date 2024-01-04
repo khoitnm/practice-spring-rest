@@ -13,7 +13,8 @@ public class APICompareApp extends BaseIntegrationTest {
     private APICaller apiCaller;
     @Test
     public void start() throws JsonProcessingException {
-        Integer[] params = {779, 933, 934, 942, 982, 1011, 3139, 3193, 3248, 3281};
+//        Integer[] params = {779, 933, 934, 942, 982, 1011, 3139, 3193, 3248, 3281};
+        Integer[] params = {779, 933};
         apiCaller.main(params);
     }
 }

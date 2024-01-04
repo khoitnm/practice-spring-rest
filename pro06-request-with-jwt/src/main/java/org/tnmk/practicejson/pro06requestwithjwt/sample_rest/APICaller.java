@@ -17,7 +17,8 @@ import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.dto.TokenResponse;
 @Service
 @RequiredArgsConstructor
 public class APICaller {
-    private final ApiProperties apiProperties;
+    private final ApiProperties apiProperties01;
+    private final ApiProperties apiProperties02;
     private final OauthProperties oauthProperties;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper;
@@ -29,8 +30,19 @@ public class APICaller {
         }
 
         for (Object param : params) {
-            String apiUrl = String.format(apiProperties.getHost() + apiProperties.getPath(), param);
-            String response01 = api01_Get(restTemplate, apiUrl, token);
+            String apiUrl01 = String.format(apiProperties01.getHost() + apiProperties01.getPath(), param);
+            String response01 = apiGet(restTemplate, apiUrl01, token);
+
+            String apiUrl02 = String.format(apiProperties02.getHost() + apiProperties02.getPath());
+            String requestBody = String.format(apiProperties02.getRequestBodyTemplate(), param);
+            String response02 = apiPost(restTemplate, apiUrl02, token, requestBody);
+
+            String response01AsList = "["+response01+"]";
+            if (!response01AsList.equals(response02)) {
+                log.error("Different response for param: {}", param);
+                log.error("Response 01: {}", response01AsList);
+                log.error("Response 02: {}", response02);
+            }
         }
     }
 
@@ -57,12 +69,22 @@ public class APICaller {
         }
     }
 
-    private static String api01_Get(RestTemplate restTemplate, String apiUrl, String token) {
+    private static String apiGet(RestTemplate restTemplate, String apiUrl, String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, String.class);
+        return response.getBody();
+    }
+
+    private static String apiPost(RestTemplate restTemplate, String apiUrl, String token, String requestBody) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
     }
 }
