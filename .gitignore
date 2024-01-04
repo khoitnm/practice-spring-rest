@@ -40,3 +40,4 @@ springboot-batch-partition-fileinput/gradlew\.bat
 
 
 **/application-qa.properties
+/pro06-request-with-jwt/src/main/resources/application-local.properties

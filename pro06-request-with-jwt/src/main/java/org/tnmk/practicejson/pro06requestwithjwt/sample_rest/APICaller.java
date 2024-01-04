@@ -13,6 +13,11 @@ import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.config.ApiPropertie
 import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.config.OauthProperties;
 import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.dto.TokenResponse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -28,21 +33,42 @@ public class APICaller {
         if (token == null) {
             throw new IllegalStateException("Failed to get JWT token.");
         }
+        String apiUrl02 = String.format(apiProperties02.getHost() + apiProperties02.getPath());
 
+        List<String> allResponse01 = new ArrayList<>();
         for (Object param : params) {
-            String apiUrl01 = String.format(apiProperties01.getHost() + apiProperties01.getPath(), param);
-            String response01 = apiGet(restTemplate, apiUrl01, token);
+            try {
+                String apiUrl01 = String.format(apiProperties01.getHost() + apiProperties01.getPath(), param);
+                String response01 = apiGet(restTemplate, apiUrl01, token);
+                allResponse01.add(response01);
 
-            String apiUrl02 = String.format(apiProperties02.getHost() + apiProperties02.getPath());
-            String requestBody = String.format(apiProperties02.getRequestBodyTemplate(), param);
-            String response02 = apiPost(restTemplate, apiUrl02, token, requestBody);
+                String requestBody = String.format(apiProperties02.getRequestBodyTemplate(), param);
+                String response02 = apiPost(restTemplate, apiUrl02, token, requestBody);
 
-            String response01AsList = "["+response01+"]";
-            if (!response01AsList.equals(response02)) {
-                log.error("Different response for param: {}", param);
-                log.error("Response 01: {}", response01AsList);
-                log.error("Response 02: {}", response02);
+                String response01AsList = "[" + response01 + "]";
+                assertSameResponse(param, response01AsList, response02);
+            } catch (RuntimeException ex) {
+                log.error("Cannot compare param: {}", param, ex);
             }
+        }
+
+        String paramsAsString = Arrays.stream(params).map(param -> String.valueOf(param)).collect(Collectors.joining(",","",""));
+        String requestBody = String.format(apiProperties02.getRequestBodyTemplate(), paramsAsString);
+        String response02Combined = apiPost(restTemplate, apiUrl02, token, requestBody);
+        apiPost(restTemplate, apiUrl02, token, requestBody);
+
+        String allResponse01AsJsonList = allResponse01.stream().collect(Collectors.joining(",", "[", "]"));
+        assertSameResponse(Arrays.toString(params), allResponse01AsJsonList, response02Combined);
+    }
+
+    private void assertSameResponse(Object param, String response01, String response02) {
+        if (!response01.equals(response02)) {
+            log.warn("Different response for param: {}\n" +
+                    "\t response01: {}\n" +
+                    "\t response02: {}\n",
+                param, response01, response02);
+        } else {
+            log.info("Same response for param: {}", param);
         }
     }
 
