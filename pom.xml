@@ -17,6 +17,7 @@
         <module>pro03-upload-file</module>
         <module>pro04-simple-filter</module>
         <module>pro05-global-error-handler</module>
+        <module>pro06-request-with-jwt</module>
     </modules>
 
     <properties>
