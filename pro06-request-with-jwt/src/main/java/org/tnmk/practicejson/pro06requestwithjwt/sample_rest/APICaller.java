@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class APICaller {
+    private static final int PARTITION_SIZE = 20;
     private final ApiProperties apiProperties01;
     private final ApiProperties apiProperties02;
     private final OauthProperties oauthProperties;
@@ -29,6 +30,15 @@ public class APICaller {
     private final ObjectMapper objectMapper;
 
     public void main(Object... params) throws JsonProcessingException {
+        List<List<Object>> partitionedLists = partitionList(Arrays.asList(params), PARTITION_SIZE);
+        int partitionIndex = -1;
+        for (List<Object> partition : partitionedLists) {
+            partitionIndex++;
+            checkResponseForItems(partitionIndex, partition.toArray());
+        }
+    }
+
+    private void checkResponseForItems(int partitionIndex, Object... params) throws JsonProcessingException {
         String token = getToken(restTemplate, objectMapper);
         if (token == null) {
             throw new IllegalStateException("Failed to get JWT token.");
@@ -36,7 +46,11 @@ public class APICaller {
         String apiUrl02 = String.format(apiProperties02.getHost() + apiProperties02.getPath());
 
         List<String> allResponse01 = new ArrayList<>();
+        int i = -1;
+        int index;
         for (Object param : params) {
+            i++;
+            index = partitionIndex * PARTITION_SIZE + i;
             try {
                 String apiUrl01 = String.format(apiProperties01.getHost() + apiProperties01.getPath(), param);
                 String response01 = apiGet(restTemplate, apiUrl01, token);
@@ -46,29 +60,33 @@ public class APICaller {
                 String response02 = apiPost(restTemplate, apiUrl02, token, requestBody);
 
                 String response01AsList = "[" + response01 + "]";
-                assertSameResponse(param, response01AsList, response02);
+                assertSameResponse(index, param, response01AsList, response02);
             } catch (RuntimeException ex) {
                 log.error("Cannot compare param: {}", param, ex);
             }
         }
 
-        String paramsAsString = Arrays.stream(params).map(param -> String.valueOf(param)).collect(Collectors.joining(",","",""));
+        String paramsAsString = Arrays.stream(params).map(param -> String.valueOf(param)).collect(Collectors.joining(",", "", ""));
         String requestBody = String.format(apiProperties02.getRequestBodyTemplate(), paramsAsString);
         String response02Combined = apiPost(restTemplate, apiUrl02, token, requestBody);
         apiPost(restTemplate, apiUrl02, token, requestBody);
 
         String allResponse01AsJsonList = allResponse01.stream().collect(Collectors.joining(",", "[", "]"));
-        assertSameResponse(Arrays.toString(params), allResponse01AsJsonList, response02Combined);
+        assertSameResponse(-1, Arrays.toString(params), allResponse01AsJsonList, response02Combined);
     }
 
-    private void assertSameResponse(Object param, String response01, String response02) {
+    private void assertSameResponse(int i, Object param, String response01, String response02) {
         if (!response01.equals(response02)) {
-            log.warn("Different response for param: {}\n" +
+            log.warn("[{}] Different response for param: {}\n" +
                     "\t response01: {}\n" +
                     "\t response02: {}\n",
-                param, response01, response02);
+                i, param, response01, response02);
         } else {
-            log.info("Same response for param: {}", param);
+            if (i == -1) {
+                log.info("[{}] Same response for param: {}", i, param);
+            } else {
+                // don't need to print to avoid too many messages.
+            }
         }
     }
 
@@ -112,5 +130,18 @@ public class APICaller {
 
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
         return response.getBody();
+    }
+
+    public static <T> List<List<T>> partitionList(List<T> inputList, int partitionSize) {
+        List<List<T>> partitionedLists = new ArrayList<>();
+        int listSize = inputList.size();
+
+        for (int i = 0; i < listSize; i += partitionSize) {
+            int end = Math.min(i + partitionSize, listSize);
+            List<T> partition = inputList.subList(i, end);
+            partitionedLists.add(partition);
+        }
+
+        return partitionedLists;
     }
 }

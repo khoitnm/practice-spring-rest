@@ -41,3 +41,7 @@ springboot-batch-partition-fileinput/gradlew\.bat
 
 **/application-qa.properties
 /pro06-request-with-jwt/src/main/resources/application-local.properties
+/pro06-request-with-jwt/response01.json
+/pro06-request-with-jwt/response02.json
+/pro06-request-with-jwt/special_diff_case/
+/pro06-request-with-jwt/diff/
