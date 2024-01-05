@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.config.ApiProperties;
 import org.tnmk.practicejson.pro06requestwithjwt.sample_rest.config.OauthProperties;
@@ -34,7 +35,11 @@ public class APICaller {
         int partitionIndex = -1;
         for (List<Object> partition : partitionedLists) {
             partitionIndex++;
-            checkResponseForItems(partitionIndex, partition.toArray());
+            try {
+                checkResponseForItems(partitionIndex, partition.toArray());
+            } catch (RuntimeException ex) {
+                log.error("Cannot compare partition: {}", partition, ex);
+            }
         }
     }
 
@@ -117,9 +122,12 @@ public class APICaller {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, String.class);
-        return response.getBody();
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, String.class);
+            return response.getBody();
+        } catch (HttpClientErrorException.NotFound ex) {
+            return ex.getResponseBodyAsString();
+        }
     }
 
     private static String apiPost(RestTemplate restTemplate, String apiUrl, String token, String requestBody) {
@@ -127,9 +135,12 @@ public class APICaller {
         headers.setBearerAuth(token);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
-        return response.getBody();
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, requestEntity, String.class);
+            return response.getBody();
+        } catch (HttpClientErrorException.NotFound ex) {
+            return "[" + ex.getResponseBodyAsString() + "]";
+        }
     }
 
     public static <T> List<List<T>> partitionList(List<T> inputList, int partitionSize) {

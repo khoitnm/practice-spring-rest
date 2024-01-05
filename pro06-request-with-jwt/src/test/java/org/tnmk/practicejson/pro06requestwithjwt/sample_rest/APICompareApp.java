@@ -17,6 +17,7 @@ public class APICompareApp extends BaseIntegrationTest {
 
     @Autowired
     private APICaller apiCaller;
+
     @Test
     public void start() throws JsonProcessingException {
         apiCaller.main(params.toArray());
