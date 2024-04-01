@@ -18,6 +18,7 @@
         <module>pro04-simple-filter</module>
         <module>pro05-global-error-handler</module>
         <module>pro06-request-with-jwt</module>
+        <module>pro07-connection-timeout</module>
     </modules>
 
     <properties>
