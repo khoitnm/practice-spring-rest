@@ -13,16 +13,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
 
+        <!-- Please maintain that spring boot and spring cloud versions to make sure they are compatible together -->
         <springframework.boot.version>3.2.4</springframework.boot.version>
+        <springframework.cloud.version>2023.0.1</springframework.cloud.version>
     </properties>
 
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -31,24 +32,14 @@
 
         <!-- TEST -->
         <dependency>
+            <!-- We need this dependency because of HttpServletRequest & Response in testing -->
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <!--
-                https://junit.org/junit5/docs/current/user-guide/
-                JUnit Vintage provides a TestEngine for running JUnit 3 and JUnit 4 based tests
-                And we don't need it anymore, we are using newer JUnit.
-                -->
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -56,6 +47,13 @@
     <dependencyManagement>
         <dependencies>
             <!-- SPRING FRAMEWORK DEPENDENCIES MANAGEMENT-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springframework.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
